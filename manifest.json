@@ -1,0 +1,14 @@
+{
+  "manifest_version": 2,
+
+  "name": "Countdown",
+  "description": "This extension counts down",
+  "version": "1.0",
+
+  "chrome_url_overrides": {
+    "newtab": "countdown.html"
+  },
+  "icons": {
+    "128": "icon128.png"
+  }
+}
