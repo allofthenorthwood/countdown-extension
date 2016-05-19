@@ -1,0 +1,48 @@
+<html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+    <style>
+    body {
+        font-family: Lato, sans-serif;
+        font-weight: 100;
+        text-align: center;
+    }
+    .content {
+        margin-top: 50px;
+    }
+    .date-label {
+        display: block;
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+    #date-input {
+        background: #fff;
+        border: 1px solid #ccc;
+        font: inherit;
+        font-size: 30px;
+        max-width: 200px;
+        padding: 5px 10px;
+        text-align: center;
+        width: 100%;
+    }
+    #save {
+        background: #fff;
+        border: 1px solid #ccc;
+        font: inherit;
+        font-size: 30px;
+        padding: 5px 30px;
+        margin-top: 25px;
+    }
+    </style>
+</head>
+<body>
+<div class="content">
+    <label class="date-label" for="date-input">count down until</label>
+    <input id="date-input" type="text" placeholder="mm-dd-yyyy" />
+    <div id="status"></div>
+    <button id="save">Save</button>
+</div>
+<script src="moment.js"></script>
+<script src="options.js"></script>
+</body>
+</html>
