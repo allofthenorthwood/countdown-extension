@@ -1,0 +1,3 @@
+(function (exports) {
+    // TODO
+})(globalModules);
