@@ -14,11 +14,22 @@
     .subtitle {
         font-size: 80;
     }
+
+    #main-background-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
     </style>
 </head>
 <body>
-<div id="count"></div>
-<div class="subtitle">days left</div>
+<div class="countdown-content">
+    <div id="count"></div>
+    <div class="subtitle">days left</div>
+</div>
+<canvas id="main-background-canvas"></canvas>
 
 <!-- Third Party -->
 <script src="moment.js"></script>
