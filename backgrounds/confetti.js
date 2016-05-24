@@ -1,11 +1,24 @@
 (function(exports) {
 
-exports.Confetti = function(canvas, ctx, canvasWidth, canvasHeight) {
+exports.Confetti = function(canvas, colors) {
+  // really nice colors
+  // colors = ["#F04155", "#FF823A", "#F2F26F", "#FFF7BD", "#95CFB7"];
+
+  var ctx = canvas.getContext("2d");
+  var canvasWidth = canvas.getAttribute("width");
+  var canvasHeight = canvas.getAttribute("height");
+
+  function random(low, high) {
+    return Math.random() * (high - low) + low;
+  }
+
   var particles = [];
 
-  var PARTICLE_WIDTH = 12;
-  var PARTICLE_HEIGHT = 6;
-  var PARTICLE_DIAMETER = Math.sqrt(PARTICLE_WIDTH * PARTICLE_WIDTH + PARTICLE_HEIGHT * PARTICLE_HEIGHT);
+  var PARTICLE_WIDTH = 24;
+  var PARTICLE_HEIGHT = 12;
+  var PARTICLE_DIAMETER = Math.sqrt(PARTICLE_WIDTH * PARTICLE_WIDTH +
+    PARTICLE_HEIGHT * PARTICLE_HEIGHT);
+  var GRAVITY = 2000;
 
   function tick() {
     var now = Date.now();
@@ -17,7 +30,7 @@ exports.Confetti = function(canvas, ctx, canvasWidth, canvasHeight) {
 
       var angle = particle.angle + particle.spin * age;
       var x = particle.x + particle.vx * age;
-      var y = particle.y + particle.vy * age + 1600 * age * age / 2;
+      var y = particle.y + particle.vy * age + GRAVITY * age * age / 2;
 
       if (x + PARTICLE_DIAMETER < 0 ||
           x - PARTICLE_DIAMETER > canvasWidth ||
@@ -39,8 +52,8 @@ exports.Confetti = function(canvas, ctx, canvasWidth, canvasHeight) {
       ctx.fillRect(
         -5,
         -5,
-        6 * particle.scale,
-        12 * particle.scale
+        PARTICLE_HEIGHT * particle.scale,
+        PARTICLE_WIDTH * particle.scale
       );
       ctx.restore();
     }
@@ -50,20 +63,6 @@ exports.Confetti = function(canvas, ctx, canvasWidth, canvasHeight) {
     }
   }
 
-  function random(low, high) {
-    return Math.random() * (high - low) + low;
-  }
-
-  var colors = [
-    "#f6ec09",
-    "#ff4500",
-    "#85da45",
-    "#4ea6f1",
-  ];
-
-  function getColor() {
-    return colors[Math.floor(random(0, colors.length))];
-  }
   canvas.addEventListener("mousedown", function(e) {
     e.preventDefault();
   });
@@ -78,11 +77,11 @@ exports.Confetti = function(canvas, ctx, canvasWidth, canvasHeight) {
     }
 
     for (var i = 0; i < 80; i++) {
-      var speed = random(225, 675);
+      var speed = random(450, 1350);
       var angle = -Math.PI / 2 + 0.7 * random(-0.5, 0.5);
       particles.push({
         birth: Date.now(),
-        color: getColor(),
+        color: colors[Math.floor(random(0, colors.length))],
         x: cx,
         y: cy,
         spin: 20 * random(-0.5, 0.5),
