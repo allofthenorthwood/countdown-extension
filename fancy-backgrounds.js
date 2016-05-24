@@ -11,13 +11,18 @@
   canvas.style.height = canvasHeight + "px";
   ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
 
-  function random(low, high) {
-    return Math.random() * (high - low) + low;
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  var r = random(0, exports.colorPalettes.length - 1);
-  var colors = exports.colorPalettes[parseInt(r)];
+  var fancyBackgrounds = [
+    exports.Confetti
+  ];
+  var idx = randomInt(0, fancyBackgrounds.length - 1);
 
-  exports.Confetti(canvas, colors);
+
+  var fancyBackground = fancyBackgrounds[idx];
+
+  fancyBackground(canvas, exports.colorPalettes);
 
 })(globalModules);

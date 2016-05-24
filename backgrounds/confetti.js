@@ -1,16 +1,19 @@
 (function(exports) {
 
-exports.Confetti = function(canvas, colors) {
+exports.Confetti = function(canvas, colorPalettes) {
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  function random(low, high) {
+    return Math.random() * (high - low) + low;
+  }
+  var colors = colorPalettes[randomInt(0, colorPalettes.length - 1)];
   // really nice colors
   // colors = ["#F04155", "#FF823A", "#F2F26F", "#FFF7BD", "#95CFB7"];
 
   var ctx = canvas.getContext("2d");
   var canvasWidth = canvas.getAttribute("width");
   var canvasHeight = canvas.getAttribute("height");
-
-  function random(low, high) {
-    return Math.random() * (high - low) + low;
-  }
 
   var particles = [];
 
