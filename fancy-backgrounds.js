@@ -16,10 +16,10 @@
   }
 
   var fancyBackgrounds = [
-    exports.Confetti
+    exports.Confetti,
+    exports.SquareLife
   ];
   var idx = randomInt(0, fancyBackgrounds.length - 1);
-
 
   var fancyBackground = fancyBackgrounds[idx];
 
