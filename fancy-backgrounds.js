@@ -17,12 +17,14 @@
 
   var fancyBackgrounds = [
     exports.Confetti,
-    exports.SquareLife
+    exports.SquareLife,
+    exports.SquareRandomWalk,
   ];
   var idx = randomInt(0, fancyBackgrounds.length - 1);
 
   var fancyBackground = fancyBackgrounds[idx];
 
+  //exports.ShowColorPalettes(canvas, exports.colorPalettes);
   fancyBackground(canvas, exports.colorPalettes);
 
 })(globalModules);
