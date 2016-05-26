@@ -16,8 +16,6 @@ exports.SquareRandomWalk = function(canvas, colorPalettes) {
   var PARTICLE_SIZE = 10;
 
   function tick() {
-    //ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-
     for (var i = 0; i < particles.length; i++) {
       var particle = particles[i];
 
@@ -33,12 +31,10 @@ exports.SquareRandomWalk = function(canvas, colorPalettes) {
       }
 
       var move = possibleMoves[randomInt(0, possibleMoves.length - 1)];
-      console.log(move)
 
       if (!move || (move.x + PARTICLE_SIZE < 0 ||
           move.x - PARTICLE_SIZE > canvasWidth ||
           move.y - PARTICLE_SIZE > canvasHeight)) {
-        // swap!
         if (i === particles.length - 1) {
           particles.pop();
         } else {
@@ -58,8 +54,6 @@ exports.SquareRandomWalk = function(canvas, colorPalettes) {
 
       ctx.save();
       ctx.fillStyle = particle.color;
-      // This is pretty cool too:
-      //ctx.globalAlpha = 0.3;
       ctx.translate(x, y);
       ctx.fillRect(
         -5,
@@ -69,7 +63,6 @@ exports.SquareRandomWalk = function(canvas, colorPalettes) {
       );
       ctx.restore();
 
-      particle.time++;
       particle.x = x;
       particle.y = y;
     }
@@ -92,9 +85,8 @@ exports.SquareRandomWalk = function(canvas, colorPalettes) {
       requestAnimationFrame(tick);
     }
 
-    for (var i = 0; i < 80; i++) {
+    for (var i = 0; i < 10; i++) {
       particles.push({
-        time: 0,
         color: colors[randomInt(0, colors.length)],
         x: cx,
         y: cy,
