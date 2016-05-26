@@ -16,8 +16,6 @@ exports.PaintSplatters = function(canvas, colorPalettes) {
   var time = 0;
 
   function tick() {
-    //ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-
     for (var i = 0; i < particles.length; i++) {
       var particle = particles[i];
 
