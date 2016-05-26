@@ -19,6 +19,7 @@
     exports.Confetti,
     exports.SquareLife,
     exports.SquareRandomWalk,
+    exports.PaintSplatters,
   ];
   var idx = randomInt(0, fancyBackgrounds.length - 1);
 
