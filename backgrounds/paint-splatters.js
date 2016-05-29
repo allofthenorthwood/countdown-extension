@@ -7,8 +7,9 @@ exports.PaintSplatters = function(canvas, colorPalettes) {
   var colors = colorPalettes[randomInt(0, colorPalettes.length - 1)];
 
   var ctx = canvas.getContext("2d");
-  var canvasWidth = canvas.getAttribute("width");
-  var canvasHeight = canvas.getAttribute("height");
+  var pixelRatio = 2.0;
+  var canvasWidth = canvas.getAttribute("width") / pixelRatio;
+  var canvasHeight = canvas.getAttribute("height") / pixelRatio;
 
   var particles = [];
   var MAX_PARTICLE_SIZE = 10;
