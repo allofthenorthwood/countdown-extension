@@ -260,11 +260,11 @@ exports.Lanterns = function(canvas, colorPalettes) {
     // side of the screen for the edges of the power line:
     var leftPoint = {
       x: -300,
-      y: randomInt(clickPoint.y - 200, clickPoint.y - 50),
+      y: randomInt(clickPoint.y - 400, clickPoint.y - 50),
     };
     var rightPoint = {
       x: canvasWidth + 300,
-      y: randomInt(clickPoint.y - 200, clickPoint.y - 50),
+      y: randomInt(clickPoint.y - 400, clickPoint.y - 50),
     };
 
     var controlPoint = {
@@ -272,15 +272,19 @@ exports.Lanterns = function(canvas, colorPalettes) {
       y: clickPoint.y * 2 - (leftPoint.y + rightPoint.y) / 2,
     };
 
-    var getRandomRoost = function() {
-      var t = Math.random(0, 1);
+    var getRandomLanternSpot = function(start, end) {
+      start = start || 0;
+      end = end || 1;
+      // A number 0 <= t <= 1 that's between start & end and then shifted over
+      // to chop off the last 5% on either side
+      var t = randomInt(start * 1000, end * 1000) / 1000 * 0.9 + 0.05;
       var x = (1 - t) * ((1 - t) * leftPoint.x + (t * controlPoint.x)) +
         t * ((1 - t) * controlPoint.x + (t * rightPoint.x));
       var y = (1 - t) * ((1 - t) * leftPoint.y + (t * controlPoint.y)) +
         t * ((1 - t) * controlPoint.y + (t * rightPoint.y));
       return {
         x: x,
-        y: y,
+        y: y - 5,
       };
     };
 
@@ -289,12 +293,10 @@ exports.Lanterns = function(canvas, colorPalettes) {
       controlPoint: controlPoint,
       rightPoint: rightPoint,
       color: getRandomColor(),
-      getRandomRoost: getRandomRoost,
     });
 
     for (var i = 0; i < 4; i++) {
-      var roost = getRandomRoost();
-      // TODO: space out the lanterns
+      var roost = getRandomLanternSpot(i * 0.25, (i + 1) * 0.25);
       var size = randomInt(50, 100);
       lanterns.push({
         line: lines.length - 1,
