@@ -216,6 +216,7 @@ exports.Lanterns = function(canvas, colorPalettes) {
       var lantern = lanterns[i];
       // This changes every tick
       var glowSize = lantern.glowSize * randomInt(90, 110) / 100;
+      var stringLength = 10;
 
       // Soft glow:
       /*var glow = ctx.createRadialGradient(
@@ -243,29 +244,40 @@ exports.Lanterns = function(canvas, colorPalettes) {
 
       // Hard glow:
       var numGlowCircle = 5;
-      ctx.strokeStyle = 'rgba(0,0,0,0)';
       for (var circleIdx = 0; circleIdx < numGlowCircle; circleIdx++) {
         var glowAdjustment = randomInt(98, 102) / 100;
-        ctx.save();
-        ctx.globalAlpha = 0.1;
-        ctx.fillStyle = lantern.color;
+        ctx.strokeStyle = printHexToRgba(
+          lantern.color,
+          circleIdx === numGlowCircle - 1 ? 0.2 : 0.05
+        );
+        ctx.fillStyle = printHexToRgba(lantern.color, 0.1);
         ctx.moveTo(lantern.position.x, lantern.position.y);
         ctx.beginPath();
         ctx.arc(
-          lantern.position.x + lantern.size / 2,
-          lantern.position.y + lantern.size / 2,
+          lantern.position.x,
+          lantern.position.y + lantern.size / 2 + stringLength,
           glowSize * ( circleIdx + 1 ) / numGlowCircle * glowAdjustment,
           0,
           Math.PI * 2
         );
+        ctx.closePath();
         ctx.fill();
+        ctx.stroke();
         ctx.restore();
       }
-      ctx.globalAlpha = 1;
+
+      ctx.strokeStyle = lantern.color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(lantern.position.x, lantern.position.y);
+      ctx.lineTo(lantern.position.x, lantern.position.y + stringLength * 2);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.restore();
 
       drawStarLantern(
-        lantern.position.x,
-        lantern.position.y,
+        lantern.position.x - lantern.size / 2,
+        lantern.position.y + stringLength,
         lantern.size,
         lantern.color
       );
@@ -312,7 +324,7 @@ exports.Lanterns = function(canvas, colorPalettes) {
         t * ((1 - t) * controlPoint.y + (t * rightPoint.y));
       return {
         x: x,
-        y: y - 5,
+        y: y,
       };
     };
 
