@@ -20,6 +20,7 @@
     exports.SquareLife,
     exports.SquareRandomWalk,
     exports.PaintSplatters,
+    exports.Lanterns,
   ];
   var idx = randomInt(0, fancyBackgrounds.length - 1);
 
