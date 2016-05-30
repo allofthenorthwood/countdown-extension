@@ -3,7 +3,7 @@
 
   "name": "Countdown",
   "description": "This extension counts down",
-  "version": "1.0",
+  "version": "0.0.0.1",
 
   "chrome_url_overrides": {
     "newtab": "countdown.html"
