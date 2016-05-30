@@ -217,7 +217,8 @@ exports.Lanterns = function(canvas, colorPalettes) {
       // This changes every tick
       var glowSize = lantern.glowSize * randomInt(90, 110) / 100;
 
-      var glow = ctx.createRadialGradient(
+      // Soft glow:
+      /*var glow = ctx.createRadialGradient(
         lantern.position.x + lantern.size / 2,
         lantern.position.y + lantern.size / 2,
         glowSize / 2,
@@ -229,19 +230,46 @@ exports.Lanterns = function(canvas, colorPalettes) {
       glow.addColorStop(1, lantern.color);
       ctx.fillStyle = glow;
       ctx.globalAlpha = 0.8;
+
       ctx.fillRect(
         lantern.position.x + lantern.size / 2 - glowSize / 2,
         lantern.position.y + lantern.size / 2 - glowSize / 2,
         glowSize,
         glowSize
       );
+      ctx.save();
       ctx.globalAlpha = 1;
+      */
+
+      // Hard glow:
+      var numGlowCircle = 5;
+      ctx.strokeStyle = 'rgba(0,0,0,0)';
+      for (var circleIdx = 0; circleIdx < numGlowCircle; circleIdx++) {
+        var glowAdjustment = randomInt(98, 102) / 100;
+        ctx.save();
+        ctx.globalAlpha = 0.1;
+        ctx.fillStyle = lantern.color;
+        ctx.moveTo(lantern.position.x, lantern.position.y);
+        ctx.beginPath();
+        ctx.arc(
+          lantern.position.x + lantern.size / 2,
+          lantern.position.y + lantern.size / 2,
+          glowSize * ( circleIdx + 1 ) / numGlowCircle * glowAdjustment,
+          0,
+          Math.PI * 2
+        );
+        ctx.fill();
+        ctx.restore();
+      }
+      ctx.globalAlpha = 1;
+
       drawStarLantern(
         lantern.position.x,
         lantern.position.y,
         lantern.size,
         lantern.color
       );
+
     }
   }
 
@@ -303,7 +331,7 @@ exports.Lanterns = function(canvas, colorPalettes) {
         position: position,
         color: getRandomColor(),
         size: size,
-        glowSize: (size * randomInt(200, 300) / 100) / 2,
+        glowSize: (size * randomInt(150, 200) / 100) / 2,
       });
     }
 
