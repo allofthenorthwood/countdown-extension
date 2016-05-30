@@ -218,11 +218,11 @@ exports.Lanterns = function(canvas, colorPalettes) {
       var glowSize = lantern.glowSize * randomInt(90, 110) / 100;
 
       var glow = ctx.createRadialGradient(
-        lantern.roost.x + lantern.size / 2,
-        lantern.roost.y + lantern.size / 2,
+        lantern.position.x + lantern.size / 2,
+        lantern.position.y + lantern.size / 2,
         glowSize / 2,
-        lantern.roost.x + lantern.size / 2,
-        lantern.roost.y + lantern.size / 2,
+        lantern.position.x + lantern.size / 2,
+        lantern.position.y + lantern.size / 2,
         0
       );
       glow.addColorStop(0, printHexToRgba(lantern.color, 0));
@@ -230,15 +230,15 @@ exports.Lanterns = function(canvas, colorPalettes) {
       ctx.fillStyle = glow;
       ctx.globalAlpha = 0.8;
       ctx.fillRect(
-        lantern.roost.x + lantern.size / 2 - glowSize / 2,
-        lantern.roost.y + lantern.size / 2 - glowSize / 2,
+        lantern.position.x + lantern.size / 2 - glowSize / 2,
+        lantern.position.y + lantern.size / 2 - glowSize / 2,
         glowSize,
         glowSize
       );
       ctx.globalAlpha = 1;
       drawStarLantern(
-        lantern.roost.x,
-        lantern.roost.y,
+        lantern.position.x,
+        lantern.position.y,
         lantern.size,
         lantern.color
       );
@@ -296,11 +296,11 @@ exports.Lanterns = function(canvas, colorPalettes) {
     });
 
     for (var i = 0; i < 4; i++) {
-      var roost = getRandomLanternSpot(i * 0.25, (i + 1) * 0.25);
+      var position = getRandomLanternSpot(i * 0.25, (i + 1) * 0.25);
       var size = randomInt(50, 100);
       lanterns.push({
         line: lines.length - 1,
-        roost: roost,
+        position: position,
         color: getRandomColor(),
         size: size,
         glowSize: (size * randomInt(200, 300) / 100) / 2,
