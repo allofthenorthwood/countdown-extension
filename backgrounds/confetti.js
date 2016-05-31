@@ -1,6 +1,6 @@
 (function(exports) {
 
-exports.Confetti = function(canvas, colorPalettes) {
+exports.Confetti = function(canvas, colorPalettes, staticCanvas) {
   function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
@@ -12,6 +12,7 @@ exports.Confetti = function(canvas, colorPalettes) {
   // colors = ["#F04155", "#FF823A", "#F2F26F", "#FFF7BD", "#95CFB7"];
 
   var ctx = canvas.getContext("2d");
+  var ctxStatic = staticCanvas.getContext("2d");
   var pixelRatio = 2.0;
   var canvasWidth = canvas.getAttribute("width") / pixelRatio;
   var canvasHeight = canvas.getAttribute("height") / pixelRatio;
@@ -24,6 +25,20 @@ exports.Confetti = function(canvas, colorPalettes) {
     PARTICLE_HEIGHT * PARTICLE_HEIGHT);
   var GRAVITY = 2000;
 
+  function drawParticle(context, particle, x, y, angle) {
+    context.save();
+    context.fillStyle = particle.color;
+    context.translate(x, y);
+    context.rotate(angle);
+    context.fillRect(
+      -5,
+      -5,
+      PARTICLE_HEIGHT * particle.scale,
+      PARTICLE_WIDTH * particle.scale
+    );
+    context.restore();
+  }
+
   function tick() {
     var now = Date.now();
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -33,40 +48,23 @@ exports.Confetti = function(canvas, colorPalettes) {
       var x = particle.x;
       var y = particle.y;
 
-      var age = particle.death ? (particle.death - particle.birth) / 1000 :
-        (now - particle.birth) / 1000;
+      var age = (now - particle.birth) / 1000;
       var angle = particle.angle + particle.spin * age;
 
-      if (!particle.death) {
-        x += particle.vx * age;
-        y += particle.vy * age + GRAVITY * age * age / 2;
-      }
+      x += particle.vx * age;
+      y += particle.vy * age + GRAVITY * age * age / 2;
 
-      if (!particle.death && (
-          x + PARTICLE_DIAMETER < 0 ||
+      if (x + PARTICLE_DIAMETER < 0 ||
           x - PARTICLE_DIAMETER > canvasWidth ||
-          y - PARTICLE_DIAMETER > canvasHeight - PARTICLE_DIAMETER * 2)) {
-        particle.x = x;
-        particle.y = y;
-        particle.angle = angle;
-        particle.death = now;
+          y - PARTICLE_DIAMETER > canvasHeight - PARTICLE_DIAMETER * 2) {
+        particles.splice(i, 1);
+        drawParticle(ctxStatic, particle, x, y, angle);
+      } else {
+        drawParticle(ctx, particle, x, y, angle);
       }
-
-      ctx.save();
-      ctx.fillStyle = particle.color;
-      ctx.translate(x, y);
-      ctx.rotate(angle);
-      ctx.fillRect(
-        -5,
-        -5,
-        PARTICLE_HEIGHT * particle.scale,
-        PARTICLE_WIDTH * particle.scale
-      );
-      ctx.restore();
     }
 
-    var allDone = particles.every(function(e) { return e.death; });
-    if (!allDone) {
+    if (particles.length > 0) {
       requestAnimationFrame(tick);
     }
   }
@@ -87,7 +85,6 @@ exports.Confetti = function(canvas, colorPalettes) {
       var angle = -Math.PI / 2 + 0.7 * random(-0.5, 0.5);
       particles.push({
         birth: Date.now(),
-        death: null,
         color: colors[Math.floor(random(0, colors.length))],
         x: cx,
         y: cy,
