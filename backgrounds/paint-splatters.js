@@ -96,7 +96,7 @@ exports.PaintSplatters = function(canvas, colorPalettes) {
     for (var i = 0; i < 80; i++) {
       particles.push({
         time: 0,
-        color: colors[randomInt(0, colors.length)],
+        color: colors[randomInt(0, colors.length - 1)],
         x: cx,
         y: cy,
       });

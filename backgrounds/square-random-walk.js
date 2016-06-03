@@ -88,7 +88,7 @@ exports.SquareRandomWalk = function(canvas, colorPalettes) {
 
     for (var i = 0; i < 10; i++) {
       particles.push({
-        color: colors[randomInt(0, colors.length)],
+        color: colors[randomInt(0, colors.length - 1)],
         x: cx,
         y: cy,
       });

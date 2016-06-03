@@ -85,7 +85,7 @@ exports.Confetti = function(canvas, colorPalettes, staticCanvas) {
       var angle = -Math.PI / 2 + 0.7 * random(-0.5, 0.5);
       particles.push({
         birth: Date.now(),
-        color: colors[Math.floor(random(0, colors.length))],
+        color: colors[randomInt(0, colors.length - 1)],
         x: cx,
         y: cy,
         spin: 20 * random(-0.5, 0.5),
