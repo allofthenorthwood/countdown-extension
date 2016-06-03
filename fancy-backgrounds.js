@@ -27,12 +27,17 @@
     exports.SquareRandomWalk,
     exports.PaintSplatters,
     exports.Lanterns,
+    //exports.Birds,
   ];
   var idx = randomInt(0, fancyBackgrounds.length - 1);
 
+  idx = idx;
+
   var fancyBackground = fancyBackgrounds[idx];
 
-  //exports.ShowColorPalettes(canvas, exports.colorPalettes);
-  fancyBackground(canvas, exports.colorPalettes);
+  //exports.ShowColorPalettes(dynamicCanvas, exports.colorPalettes);
+  fancyBackground(dynamicCanvas, exports.colorPalettes, staticCanvas);
+
+  // TODO: rain
 
 })(globalModules);
