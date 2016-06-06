@@ -1,9 +1,9 @@
 // Saves options to chrome.storage
 function save_options() {
     var inputValue = document.getElementById('date-input').value;
-    var date = moment(inputValue, "MM-DD-YYYY").format("X");
+    var date = moment(inputValue, "MM-DD-YYYY");
     chrome.storage.sync.set({
-        countdownDate: date,
+        countdownDate: date.isValid() ? date.format("X") : "",
     }, function() {
         // Update status to let user know options were saved.
         var status = document.getElementById('status');
@@ -18,7 +18,8 @@ function restore_options() {
     chrome.storage.sync.get({
         countdownDate: new Date(),
     }, function(items) {
-        var formattedDate = moment(items.countdownDate, "X").format('MM-DD-YYYY');
+        var date = moment(items.countdownDate, "X");
+        var formattedDate = date.isValid() ? date.format('MM-DD-YYYY') : "";
         document.getElementById('date-input').value = formattedDate;
     });
 }
