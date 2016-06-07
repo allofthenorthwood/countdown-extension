@@ -26,7 +26,10 @@ exports.Birds = function(canvas, colorPalettes) {
     ctx.save();
     ctx.translate(x,y);
     ctx.fillStyle = color;
-    ctx.fillRect(0, 0, size, size);
+    ctx.beginPath();
+    ctx.ellipse(0, 5, size / 1.5, size, 0, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
     ctx.restore();
   };
 
