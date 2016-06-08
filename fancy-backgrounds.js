@@ -27,7 +27,8 @@
     exports.SquareRandomWalk,
     exports.PaintSplatters,
     exports.Lanterns,
-    //exports.Birds,
+    exports.Birds,
+    exports.Life,
   ];
   var idx = randomInt(0, fancyBackgrounds.length - 1);
 
