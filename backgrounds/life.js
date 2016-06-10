@@ -15,14 +15,12 @@ exports.Life = function(canvas, colorPalettes) {
   var BOARD_WIDTH = Math.floor(canvasWidth / PARTICLE_SIZE);
   var BOARD_HEIGHT = Math.floor(canvasHeight / PARTICLE_SIZE);
 
-  console.log(BOARD_HEIGHT, BOARD_WIDTH)
-
   var newBoard = function() {
     var board = [];
     for (var i = 0; i < BOARD_HEIGHT; i++) {
       board[i] = [];
       for (var j = 0; j < BOARD_WIDTH; j++) {
-        board[i][j] = Math.random() > 0.9 ? 1: 0;
+        board[i][j] = 0;
       }
     }
     return board;
@@ -108,10 +106,17 @@ exports.Life = function(canvas, colorPalettes) {
 
   canvas.addEventListener("click", function(e) {
     var rect = canvas.getBoundingClientRect();
-    var cx = Math.round((e.pageX - rect.left) / PARTICLE_SIZE) * PARTICLE_SIZE;
-    var cy = Math.round((e.pageY - rect.top) / PARTICLE_SIZE) * PARTICLE_SIZE;
+    var cx = Math.round((e.pageX - rect.left) / PARTICLE_SIZE);
+    var cy = Math.round((e.pageY - rect.top) / PARTICLE_SIZE);
 
-    // TODO: use clicks for something
+    var size = 1;
+    for (var i = cy - size; i < cy + size; i++) {
+      for (var j = cx - size; j < cx + size; j++) {
+        var row = i < 0 ? (BOARD_HEIGHT - 1 + i) : i;
+        var col = j < 0 ? (BOARD_WIDTH - 1 + j) : j;
+        currentBoard[row][col] = 1;
+      }
+    }
 
   }, false);
 
