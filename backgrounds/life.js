@@ -89,10 +89,12 @@ exports.Life = function(canvas, colorPalettes) {
           PARTICLE_SIZE
         );
         ctx.fillStyle = !nextBoard[i][j] ? color : "#fff";
+        /*
         ctx.fillText(
           countNeighbours(nextBoard, i, j).toString(),
           PARTICLE_SIZE / 2,
           PARTICLE_SIZE / 1.5);
+        */
         ctx.restore();
       }
     }
