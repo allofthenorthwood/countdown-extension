@@ -49,7 +49,7 @@ exports.Life = function(canvas, colorPalettes) {
 
   function tick() {
     //ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    var color = colors[0];
+    var color = colors[randomInt(0, colors.length - 1)];
 
     for (var i = 0; i < BOARD_HEIGHT; i++) {
       for (var j = 0; j < BOARD_WIDTH; j++) {
