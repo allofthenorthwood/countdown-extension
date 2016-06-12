@@ -49,8 +49,6 @@ exports.Life = function(canvas, colorPalettes) {
 
   function tick() {
     //ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    var color = colors[randomInt(0, colors.length - 1)];
-
     for (var i = 0; i < BOARD_HEIGHT; i++) {
       for (var j = 0; j < BOARD_WIDTH; j++) {
         var neighbours = countNeighbours(currentBoard, i, j);
@@ -78,6 +76,7 @@ exports.Life = function(canvas, colorPalettes) {
 
     for (var i = 0; i < BOARD_HEIGHT; i++) {
       for (var j = 0; j < BOARD_WIDTH; j++) {
+      var color = colors[randomInt(0, colors.length - 1)];
 
         ctx.save();
         ctx.fillStyle = nextBoard[i][j] ? color : "#fff";
