@@ -35,15 +35,15 @@ exports.Life = function(canvas, colorPalettes) {
     var prevCol = (col === 0) ? BOARD_WIDTH - 1 : col - 1;
     var nextCol = (col === BOARD_HEIGHT - 1) ? 0 : col + 1;
 
-    return (
-      board[aboveRow][prevCol] +
-      board[aboveRow][col] +
-      board[aboveRow][nextCol] +
-      board[row][prevCol] +
-      board[row][nextCol] +
-      board[belowRow][prevCol] +
-      board[belowRow][col] +
-      board[belowRow][nextCol]
+    return parseInt(
+      !!board[aboveRow][prevCol] +
+      !!board[aboveRow][col] +
+      !!board[aboveRow][nextCol] +
+      !!board[row][prevCol] +
+      !!board[row][nextCol] +
+      !!board[belowRow][prevCol] +
+      !!board[belowRow][col] +
+      !!board[belowRow][nextCol]
     );
   };
 
@@ -61,14 +61,13 @@ exports.Life = function(canvas, colorPalettes) {
           // Any live cell with two or three live neighbours lives on to the
           // next generation.
           state = 0;
-        } else if (state === 1 && (neighbours === 2 || neighbours === 3)) {
+        } else if (state !== 0 && (neighbours === 2 || neighbours === 3)) {
           // Any live cell with more than three live neighbours dies, as if
           // by over-population.
-
         } else if (state === 0 && neighbours === 3) {
           // Any dead cell with exactly three live neighbours becomes a live
           // cell, as if by reproduction.
-          state = 1;
+          state = colors[randomInt(0, colors.length - 1)];
         }
         nextBoard[i][j] = state;
       }
@@ -76,10 +75,8 @@ exports.Life = function(canvas, colorPalettes) {
 
     for (var i = 0; i < BOARD_HEIGHT; i++) {
       for (var j = 0; j < BOARD_WIDTH; j++) {
-      var color = colors[randomInt(0, colors.length - 1)];
-
         ctx.save();
-        ctx.fillStyle = nextBoard[i][j] ? color : "#fff";
+        ctx.fillStyle = nextBoard[i][j] !== 0 ? nextBoard[i][j] : "#fff";
         ctx.translate(j * PARTICLE_SIZE, i * PARTICLE_SIZE);
         ctx.fillRect(
           0,
@@ -87,8 +84,8 @@ exports.Life = function(canvas, colorPalettes) {
           PARTICLE_SIZE,
           PARTICLE_SIZE
         );
-        ctx.fillStyle = !nextBoard[i][j] ? color : "#fff";
         /*
+        ctx.fillStyle = nextBoard[i][j] === 0 ? "#000" : "#ccc";
         ctx.fillText(
           countNeighbours(nextBoard, i, j).toString(),
           PARTICLE_SIZE / 2,
@@ -110,12 +107,14 @@ exports.Life = function(canvas, colorPalettes) {
     var cx = Math.round((e.pageX - rect.left) / PARTICLE_SIZE);
     var cy = Math.round((e.pageY - rect.top) / PARTICLE_SIZE);
 
+    var color = colors[randomInt(0, colors.length - 1)];
     var size = 1;
     for (var i = cy - size; i < cy + size; i++) {
       for (var j = cx - size; j < cx + size; j++) {
         var row = i < 0 ? (BOARD_HEIGHT - 1 + i) : i;
         var col = j < 0 ? (BOARD_WIDTH - 1 + j) : j;
-        currentBoard[row][col] = 1;
+
+        currentBoard[row][col] = color;
       }
     }
 
